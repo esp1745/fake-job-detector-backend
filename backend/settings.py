@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-+q2=t&++&@up*@)toywe2^-4m560r4*bzb*p0c!f38(meew37p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'fake-job-detector-backend.onrender.com',  # your Render backend domain
+]
 
 print("DEBUG: INSTALLED_APPS is being loaded...")
 
