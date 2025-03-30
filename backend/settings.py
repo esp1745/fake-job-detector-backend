@@ -30,6 +30,20 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'fake-job-detector-backend.onrender.com',  # your Render backend domain
 ]
+CORS_ALLOWED_ORIGINS = [
+    "https://fake-job-detector-frontend.vercel.app/",  # Replace with actual Vercel domain
+]
+CORS_ALLOW_ALL_HEADERS = True
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "authorization",
+    "content-type",
+    "origin",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 print("DEBUG: INSTALLED_APPS is being loaded...")
 
