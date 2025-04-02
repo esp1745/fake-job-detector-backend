@@ -24,27 +24,7 @@ ALLOWED_HOSTS = [
 ]
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = [
-    "https://fake-job-detector-frontend.vercel.app"  # 🚫 NO trailing slash!
-]
-
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "authorization",
-    "content-type",
-    "origin",
-    "x-csrftoken",
-    "x-requested-with",
-]
-
-CORS_ALLOW_METHODS = [
-    "GET",
-    "POST",
-    "PUT",
-    "PATCH",
-    "DELETE",
-    "OPTIONS"
-]
+CORS_ALLOW_ALL_ORIGINS = True  # ⚠️ For debugging only (remove in production!)
 
 # Application definition
 INSTALLED_APPS = [
@@ -54,13 +34,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'corsheaders',
+    'rest_framework',
     'api.apps.ApiConfig',  # Your API app
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # ✅ Must come before CommonMiddleware
+    'corsheaders.middleware.CorsMiddleware',  # ✅ Must be at the top
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
