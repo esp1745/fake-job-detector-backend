@@ -1,4 +1,3 @@
-# ml_model/predict.py
 import os
 import json
 import numpy as np
