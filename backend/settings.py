@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +28,11 @@ SECRET_KEY = 'django-insecure-+q2=t&++&@up*@)toywe2^-4m560r4*bzb*p0c!f38(meew37p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://fake-job-detector-backend.onrender.com"]
 
-print("DEBUG: INSTALLED_APPS is being loaded...")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ")
+
+
+
 
 # Application definition
 
