@@ -14,13 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# urls.py
 from django.urls import include, path
-from rest_framework import routers
-from api import views
+from rest_framework.routers import DefaultRouter
+from api.views import JobPostingViewSet, SimpleJobCheckView
 
-router = routers.DefaultRouter()
-router.register(r'jobs', views.JobPostingViewSet)
+router = DefaultRouter()
+router.register(r'jobs', JobPostingViewSet, basename='jobposting')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('api/simple-check/', SimpleJobCheckView.as_view(), name='simple-job-check'),
 ]
+
+

@@ -104,11 +104,15 @@ def predict_job(text: str, metadata: dict):
     # RAG Explanation
     rag_query = f"Job Text: {text}\nMetadata: {json.dumps(metadata)}"
     retrieved_docs = retrieve_rag_context(rag_query)
-    explanation = generate_explanation_from_rag(metadata, retrieved_docs)
+
+    if prediction:  # ⚠️ Likely Fake Job
+        explanation = generate_explanation_from_rag(metadata, retrieved_docs)
+    else:  # ✅ Likely Real Job
+        explanation = "This job appears to be legitimate based on the available information."
 
     return {
         "prediction": prediction,
         "probability": float(prediction_prob),
         "explanation": explanation,
-        "evidence": retrieved_docs
+        "evidence": retrieved_docs if prediction else []
     }

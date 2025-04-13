@@ -6,9 +6,53 @@ from .models import JobPosting
 from .serializers import JobPostingSerializer
 from ml_model.predict import predict_job
 from ml_model.web_scrapers import get_web_data
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from ml_model.predict import predict_job
+
+
+
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from ml_model.predict import predict_job
+
+class SimpleJobCheckView(APIView):
+    def post(self, request):
+        description = request.data.get("description", "").strip()
+        if not description:
+            return Response({"error": "Description is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        metadata = {
+            'salary_missing': True,
+            'profile_length': len(description),
+            'has_company_logo': False,
+            'domain_age_days': 30,
+            'linkedin_exists': False,
+            'ssl_valid': False,
+            'social_media_count': 0
+        }
+
+        try:
+            result = predict_job(description, metadata)
+            return Response({
+                "prediction": result["prediction"],
+                "probability": result["probability"],
+                "explanation": {
+                    "reasons": result.get("explanation", "").split('\n') if result.get("explanation") else []
+                },
+                "evidence": result.get("evidence", [])
+            })
+        except Exception as e:
+            return Response({"error": "Prediction failed", "details": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
 
 logger = logging.getLogger(__name__)
-
 class JobPostingViewSet(viewsets.ModelViewSet):
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
